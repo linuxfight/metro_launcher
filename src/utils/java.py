@@ -25,7 +25,7 @@ if iswin():
         QueryValueEx,
     )
 
-REQUIRED_JAVA = '17'
+REQUIRED_JAVA = '8'
 
 
 @dataclass
@@ -62,7 +62,7 @@ def check_java(path: JavaInstall | str | Path) -> JavaInstall | None:
 
 
 def is_good_version(java: JavaInstall) -> bool:
-    return java.version == '17' or java.version.startswith('17.')
+    return java.version == '8' or java.version.startswith('8.')
 
 
 def find_java_in_registry(
@@ -188,7 +188,7 @@ def validate_user_java(path: str):
         )
     if not is_good_version(java):
         raise inquirer.errors.ValidationError(
-            path, reason='Неправильная версия Java, нужна 17'
+            path, reason='Неправильная версия Java, нужна 8'
         )
     return True
 
@@ -214,7 +214,7 @@ def find_java() -> str:
 
     res = [x for x in res if x and is_good_version(x)]
     if not res:
-        print('Java 17 (нужна прям 17) не найдена')
+        print('Java 8 (нужна прям 8) не найдена')
         print('Установите ее с https://adoptium.net/ и перезапустите лаунчер')
         print('Если Java на самом деле установлена, введите путь к ней')
         return ask_user_java().path

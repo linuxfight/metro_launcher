@@ -77,6 +77,7 @@ async def launch(modpack_index: ModpackIndex, user_info: ElyByUser, config: Conf
 
     variables = {
         'natives_directory': str(mc_dir / 'natives'),
+        'client_jar': str(mc_dir / CLIENT_FILENAME),
         'launcher_name': 'java-minecraft-launcher',
         'launcher_version': '1.6.84-j',
         'classpath': os.pathsep.join(classpath),

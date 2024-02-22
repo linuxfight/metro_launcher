@@ -73,7 +73,7 @@ class ModpackIndex(BaseModel):
     version: str
     asset_index: str
     main_class: str
-    classpath: list[str] | None
+    classpath: list[Path] | None
     java_args: list[dict]
     game_args: list[dict]
     include: list[str]
@@ -96,13 +96,13 @@ class ModpackGenerator:
         res = {}
         for lib in self.version_data['libraries']:
             lib_path = lib_name_to_path(lib['name'])
-            if 'downloads' in lib:
+            if 'downloads' in lib and 'artifact' in lib:
                 res[lib_path] = (
                     lib['downloads']['artifact']['sha1'],
                     lib['downloads']['artifact']['url'],
                 )
-            else:
-                res[lib_path] = (None, lib['url'] + str(lib_path))
+            #else:
+            #    res[lib_path] = (None, lib['url'] + str(lib_path))
         return res
 
     async def download_missing_libs(self):
