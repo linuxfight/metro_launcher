@@ -14,11 +14,11 @@ from src.compat import iswin, ismac, islinux, is_frozen, chmod_x
 
 def get_update_url():
     if iswin():
-        return f'{SERVER_BASE}launcher/dva_smp_launcher.exe'
+        return f'{SERVER_BASE}launcher/metro_launcher.exe'
     if ismac():
-        return f'{SERVER_BASE}launcher/dva_smp_launcher_macos'
+        return f'{SERVER_BASE}launcher/metro_launcher_macos'
     if islinux():
-        return f'{SERVER_BASE}launcher/dva_smp_launcher_linux'
+        return f'{SERVER_BASE}launcher/metro_launcher_linux'
     raise ValueError('Unsupported platform')
 
 
