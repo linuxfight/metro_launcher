@@ -62,7 +62,7 @@ def check_java(path: JavaInstall | str | Path) -> JavaInstall | None:
 
 
 def is_good_version(java: JavaInstall) -> bool:
-    return java.version == '8' or java.version.startswith('8.')
+    return java.version == '1.8.0' or java.version.startswith('1.8.0')
 
 
 def find_java_in_registry(

@@ -39,7 +39,7 @@ async def authorize() -> str:
             return Response('Неверный код', 400)
         server.should_exit = True
         return RedirectResponse(
-            'https://account.ely.by/oauth2/code/success?appName=DVA SMP', 302
+            'https://account.ely.by/oauth2/code/success?appName=Metro', 302
         )
 
     app = Starlette(

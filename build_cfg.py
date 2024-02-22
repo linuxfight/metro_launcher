@@ -1,3 +1,3 @@
-CLIENT_ID = "adventures-lab"
-CLIENT_SECRET = "mxThki83d9Lvn7gxSA7pJ2g7_qwbT2-mriHgX8B0mLDLWntKI8GptCOpwj_Zwycc"
+CLIENT_ID = "metro"
+CLIENT_SECRET = "GOfJUxLveGS_31GAAWI82t4L_gKCb3wEaejiKHiR4czkXrFxgxgzq-rgcJpCaMaw"
 SERVER_BASE = "https://linuxfight.freemyip.com/"
