@@ -1,6 +1,9 @@
 {
+  "exec_before_all": "scp -o \"IdentitiesOnly=yes\" -o \"UserKnownHostsFile=~/Documents/.ssh/known_hosts\" -i ~/Documents/.ssh/metro_key files@linuxfight.freemyip.com:files/index.json modpacks/index.json",
+  "exec_after_all": "scp -o \"IdentitiesOnly=yes\" -o \"UserKnownHostsFile=~/Documents/.ssh/known_hosts\" -i ~/Documents/.ssh/metro_key modpacks/index.json files@linuxfight.freemyip.com:files/index.json",
   "modpacks": [
     {
+      "exec_after": "scp -r -o \"IdentitiesOnly=yes\" -o \"UserKnownHostsFile=~/Documents/.ssh/known_hosts\" -i ~/Documents/.ssh/metro_key modpacks/Metro/ files@linuxfight.freemyip.com:files/Metro",
       "version_data_path": "/home/linuxfight/Documents/minecraft_backup/versions/1.12.2-forge-14.23.5.2860/1.12.2-forge-14.23.5.2860.json",
       "instance_dir": "/home/linuxfight/Documents/minecraft_backup",
       "copy_extra": [
