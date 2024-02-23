@@ -1,5 +1,4 @@
 {
-  "exec_before_all": "scp -o \"IdentitiesOnly=yes\" -o \"UserKnownHostsFile=~/Documents/.ssh/known_hosts\" -i ~/Documents/.ssh/metro_key files@linuxfight.freemyip.com:files/index.json modpacks/index.json",
   "exec_after_all": "scp -o \"IdentitiesOnly=yes\" -o \"UserKnownHostsFile=~/Documents/.ssh/known_hosts\" -i ~/Documents/.ssh/metro_key modpacks/index.json files@linuxfight.freemyip.com:files/index.json",
   "modpacks": [
     {
@@ -11,7 +10,12 @@
         "config",
         "resources",
         "resourcepacks",
-        "natives"
+        "natives",
+        "libraries/com/turikhay/ca-fixer/1.0/ca-fixer-1.0.jar",
+        "libraries/net/minecraftforge/forge/1.12.2-14.23.5.2860/forge-1.12.2-14.23.5.2860.jar",
+        "libraries/ru/tlauncher/patchy/1.0.0/patchy-1.0.0.jar",
+        "libraries/by/ely/authlib/3.11.49.2/authlib-3.11.49.2.jar",
+        "libraries/versions/1.12.2-forge-14.23.5.2860/1.12.2-forge-14.23.5.2860.jar"
       ],
       "modpack_name": "Metro",
       "clean_forge_libs_path": "/home/linuxfight/Documents/minecraft_backup",
