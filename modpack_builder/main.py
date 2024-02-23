@@ -57,6 +57,7 @@ def exec_custom_cmd(cmd: list[str] | str | None):
     if cmd:
         subprocess.check_call(cmd, shell=True)
 
+
 class ModpackSpec(BaseModel):
     exec_before: str | None = None
     exec_after: str | None = None
@@ -96,13 +97,24 @@ class ModpackGenerator:
         res = {}
         for lib in self.version_data['libraries']:
             lib_path = lib_name_to_path(lib['name'])
-            if 'downloads' in lib and 'artifact' in lib:
-                res[lib_path] = (
-                    lib['downloads']['artifact']['sha1'],
-                    lib['downloads']['artifact']['url'],
-                )
-            #else:
-            #    res[lib_path] = (None, lib['url'] + str(lib_path))
+            if lib['downloads'].get('artifact'):
+                if lib['downloads']['artifact']['url'] == '':
+                    # res[lib_path] = (lib['downloads']['artifact']['sha1'], lib_path)
+                    print(lib)
+                else:
+                    res[lib_path] = (
+                        lib['downloads']['artifact']['sha1'],
+                        lib['downloads']['artifact']['url'],
+                    )
+            elif lib['downloads'].get('classifiers'):
+                platforms = ['windows', 'linux', 'osx'] # list of platforms, available for minecraft
+                for p in platforms:
+                    lib_path_url: str = lib['downloads']['classifiers'][f'natives-{p}']['url']
+                    lib_path = lib_path_url.replace('https://libraries.minecraft.net/', '')
+                    res[lib_path] = (
+                        lib['downloads']['classifiers'][f'natives-{p}']['sha1'],
+                        lib['downloads']['classifiers'][f'natives-{p}']['url']
+                    )
         return res
 
     async def download_missing_libs(self):
@@ -237,7 +249,7 @@ class ModpackGenerator:
         }
         return ModpackIndex(
             modpack_name=self.spec.modpack_name,
-            version=self.version_data['jar'],
+            version=self.version_data['id'],
             asset_index=self.version_data['assetIndex']['id'],
             main_class=self.version_data['mainClass'],
             classpath=self.spec.forge_libs_list,

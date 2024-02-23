@@ -90,10 +90,8 @@ async def launch(modpack_index: ModpackIndex, user_info: ElyByUser, config: Conf
         'assets_index_name': modpack_index.asset_index,
         'auth_uuid': user_info.uuid.replace('-', ''),
         'auth_access_token': config.token,
-        'clientid': '',
-        'auth_xuid': '',
         'user_type': 'mojang',
-        'version_type': 'release',
+        'version_type': 'Forge',
         'resolution_width': '925',
         'resolution_height': '530',
     }
@@ -132,6 +130,7 @@ async def launch(modpack_index: ModpackIndex, user_info: ElyByUser, config: Conf
         modpack_index.main_class,
         *minecraft_options,
     ]
+    print(*command)
     p = Popen(command, start_new_session=True, cwd=str(mc_dir))
     await asyncio.sleep(3)
     if p.poll() is not None:
