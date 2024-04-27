@@ -58,4 +58,4 @@ def save_config(config: Config) -> None:
         json.dump(dataclasses.asdict(config), f, indent=2)
 
 
-__all__ = ['Config', 'load_config', 'save_config', 'get_minecraft_dir']
+__all__ = ['Config', 'load_config', 'save_config', 'get_minecraft_dir', 'get_dirs']

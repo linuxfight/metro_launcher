@@ -97,7 +97,7 @@ async def launch(modpack_index: ModpackIndex, user_info: ElyByUser, config: Conf
     }
 
     java_options = [
-        f'-javaagent:{mc_dir / AUTHLIB_INJECTOR_FILENAME}=ely.by',
+        f'-javaagent:{mc_dir / AUTHLIB_INJECTOR_FILENAME}=https://ely.by',
         *GC_OPTIONS,
         '-Xms512M',
         f'-Xmx{config.xmx}M',

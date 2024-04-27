@@ -6,14 +6,14 @@ import inquirer.errors
 from rich import print
 
 from src import tui
-from src.config import load_config, save_config, Config
+from src.config import load_config, save_config, Config, get_dirs
 from src.ely_by import authorize
 from src.ely_by.utils import get_user, ElyByUser
 from src.errors import LauncherError
 from src.launcher import launch
 from src.tui import ensure_tty, ask, clear
 from src.update import update_if_required
-from src.utils.java import find_java, ask_user_java
+from src.utils.java import setup_java
 from src.utils.modpack import sync_modpack, ModpackNotFoundError, load_indexes, ModpackIndex
 
 
@@ -67,8 +67,6 @@ async def main_menu(indexes: list[ModpackIndex], user_info: ElyByUser, config: C
                 break
         elif answer == 'change_modpack':
             config.modpack = await select_modpack(indexes)
-        elif answer == 'java_path':
-            config.java_path = ask_user_java(config.java_path).path
         elif answer == 'xmx':
             config.xmx = int(
                 ask(
@@ -100,7 +98,7 @@ async def _main():
         config.token = await authorize()
         save_config(config)
     if not config.java_path:
-        config.java_path = find_java()
+        config.java_path = await setup_java()
         save_config(config)
     user_info = await get_user(config.token)
     indexes = await load_indexes()
