@@ -12,6 +12,7 @@ platformdirs = "^3.5.3"
 starlette = "^0.28.0"
 uvicorn = "^0.22.0"
 rich = "^13.4.2"
+aiofiles = "^23.2.1"
 
 
 [tool.poetry.group.dev.dependencies]

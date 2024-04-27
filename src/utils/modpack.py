@@ -1,4 +1,5 @@
 import asyncio
+import aiofiles
 from dataclasses import dataclass
 from hashlib import sha1
 from pathlib import Path
@@ -19,10 +20,11 @@ def hash_file(path: Path) -> str:
 
 async def download_file(client: httpx.AsyncClient, url: str, path: Path) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    resp = await client.get(url)
-    resp.raise_for_status()
-    with open(path, 'wb') as f:
-        f.write(resp.read())
+    async with client.stream('GET', url) as resp:
+        resp.raise_for_status()
+        async with aiofiles.open(path, 'wb') as file:
+            async for chunk in resp.aiter_bytes(4096):
+                await file.write(chunk)
 
 
 @dataclass
