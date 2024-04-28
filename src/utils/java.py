@@ -110,6 +110,8 @@ def get_arch() -> str:
     arch = platform.machine()
     if arch == 'x86_64':
         return 'x64'
+    elif arch == 'AMD64':
+        return 'x64'
     elif arch == 'i686':
         return arch
     else:
@@ -132,7 +134,8 @@ def generate_params() -> dict:
 
 async def get_java(params: dict) -> JavaArchive:
     async with AsyncClient() as client:
-        response = await client.get(apply_arguments_to_url(PKG_URL, params))
+        url: str = apply_arguments_to_url(PKG_URL, params)
+        response = await client.get(url)
         java_archives_json = response.json()
         java_archives: list[JavaArchive] = [JavaArchive.from_dict(item) for item in java_archives_json]
         return java_archives[0]
