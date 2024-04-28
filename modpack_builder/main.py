@@ -98,10 +98,7 @@ class ModpackGenerator:
         for lib in self.version_data['libraries']:
             lib_path = lib_name_to_path(lib['name'])
             if lib['downloads'].get('artifact'):
-                if lib['downloads']['artifact']['url'] == '':
-                    # res[lib_path] = (lib['downloads']['artifact']['sha1'], lib_path)
-                    print(lib)
-                else:
+                if lib['downloads']['artifact']['url'] != '':
                     res[lib_path] = (
                         lib['downloads']['artifact']['sha1'],
                         lib['downloads']['artifact']['url'],
