@@ -104,7 +104,7 @@ class ModpackGenerator:
                         lib['downloads']['artifact']['url'],
                     )
             elif lib['downloads'].get('classifiers'):
-                platforms = ['windows', 'linux', 'osx'] # list of platforms, available for minecraft
+                platforms = ['windows', 'linux', 'osx']  # list of platforms, available for minecraft
                 for p in platforms:
                     lib_path_url: str = lib['downloads']['classifiers'][f'natives-{p}']['url']
                     lib_path = lib_path_url.replace('https://libraries.minecraft.net/', '')

@@ -11,7 +11,7 @@ class Config:
     token: str = ''
     java_path: str = ''
     assets_dir: str = ''
-    xmx: int = 4096
+    xmx: int = 6144
     java_options: str = ''
     modpack: str = ''
 
