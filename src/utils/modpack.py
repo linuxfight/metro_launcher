@@ -107,20 +107,25 @@ async def sync_modpack(config: Config) -> ModpackIndex:
         if obj not in index.objects:
             (mc_dir / obj).unlink()
 
+    def handle_options_txt(file):
+        print(file)
+
     to_download = set()
     for obj, obj_hash in index.objects.items():
+        if obj == 'options.txt':
+            handle_options_txt(obj)
         if obj not in existing_objects or existing_objects[obj] != obj_hash:
             to_download.add(obj)
 
     async def download_coro():
         client = httpx.AsyncClient()
         while to_download:
-            obj = to_download.pop()
-            url = SERVER_BASE + index.modpack_name + '/' + obj
-            if obj.startswith('assets/'):
-                target_file = assets_dir / obj.removeprefix('assets/')
+            file_object = to_download.pop()
+            url = SERVER_BASE + index.modpack_name + '/' + file_object
+            if file_object.startswith('assets/'):
+                target_file = assets_dir / file_object.removeprefix('assets/')
             else:
-                target_file = mc_dir / obj
+                target_file = mc_dir / file_object
             retries_left = 3
             while True:
                 try:
