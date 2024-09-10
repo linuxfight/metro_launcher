@@ -29,6 +29,11 @@ jobs:
       - run: poetry install --no-root
       - run: python write_build_cfg.py
       - run: poetry run pyinstaller --onefile --name metro_launcher --exclude-module PIL --icon assets/dva_smp_launcher.png launch.py
+      - name: configure keys
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_KEY }}
+          known_hosts: ${{ secrets.KNOWN_HOSTS }}
       - name: format filenames
         env:
           TARGET_FILENAME: ${{ fromJSON('{"windows-latest":"metro_launcher.exe","ubuntu-latest":"metro_launcher_linux","macos-latest":"metro_launcher_macos"}')[matrix.os] }}
@@ -42,11 +47,4 @@ jobs:
           name: dist-${{ matrix.os }}
           path: dist/*
       - name: copy file via scp
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          port: ${{ secrets.SSH_PORT }}
-          key: ${{ secrets.SSH_KEY }}
-          source: "dist/*"
-          target: $SERVER_PATH
+        run: scp dist/* $SERVER_ADDR:$SERVER_PATH/
