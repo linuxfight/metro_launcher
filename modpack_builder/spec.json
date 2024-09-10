@@ -1,13 +1,13 @@
 {
+  "exec_before_all": "",
   "exec_after_all": "scp -o \"IdentitiesOnly=yes\" -o \"UserKnownHostsFile=~/Documents/ssh/known_hosts\" -i ~/Documents/ssh/metro_key modpacks/index.json files@linuxfight.freemyip.com:/var/www/files/index.json",
   "modpacks": [
     {
-      "exec_after": "rsync -av --delete modpacks/Metro/ -e \"ssh -o \"IdentitiesOnly=yes\" -o \"UserKnownHostsFile=~/Documents/ssh/known_hosts\" -i ~/Documents/ssh/metro_key\" files@linuxfight.freemyip.com:/var/www/files/Metro",
+      "exec_after": "rsync -av --delete modpacks/Metro/ -e \"ssh -o \"IdentitiesOnly=yes\" -o \"UserKnownHostsFile=~/Documents/ssh/known_hosts\" -i ~/Documents/ssh/metro_key\" rvs@linuxfight.freemyip.com:/home/rvs/caddy/data/launcher",
       "version_data_path": "/home/linuxfight/Documents/minecraft_backup/versions/1.12.2-forge-14.23.5.2860/1.12.2-forge-14.23.5.2860.json",
-      "instance_dir": "/home/linuxfight/Documents/minecraft_backup",
+      "instance_dir": "C:/Users/user/AppData/Roaming/.tlauncher/legacy/Minecraft/game",
       "copy_extra": [
         "authlib-injector.jar",
-        "options.txt",
         "config",
         "resources",
         "resourcepacks",
@@ -18,7 +18,7 @@
         "libraries/versions/1.12.2-forge-14.23.5.2860/1.12.2-forge-14.23.5.2860.jar"
       ],
       "modpack_name": "Metro",
-      "clean_forge_libs_path": "/home/linuxfight/Documents/minecraft_backup",
+      "clean_forge_libs_path": "C:/Users/user/AppData/Roaming/.tlauncher/legacy/Minecraft/game",
       "forge_libs_list": [
         "libraries/com/turikhay/ca-fixer/1.0/ca-fixer-1.0.jar",
         "libraries/net/minecraftforge/forge/1.12.2-14.23.5.2860/forge-1.12.2-14.23.5.2860.jar",
