@@ -20,6 +20,8 @@ def hash_file(path: Path) -> str:
 
 async def download_file(client: httpx.AsyncClient, url: str, path: Path) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
+    # fix WINDOWS MOMENT
+    url = url.replace('\\', '/')
     async with client.stream('GET', url) as resp:
         resp.raise_for_status()
         async with aiofiles.open(path, 'wb') as file:
