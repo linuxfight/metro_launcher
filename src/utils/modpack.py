@@ -1,4 +1,6 @@
 import asyncio
+import os.path
+
 import aiofiles
 from dataclasses import dataclass
 from hashlib import sha1
@@ -111,14 +113,22 @@ async def sync_modpack(config: Config) -> ModpackIndex:
         if obj not in index.objects:
             (mc_dir / obj).unlink()
 
-    async with aiofiles.open(mc_dir / 'options.txt', 'r+') as file:
-        lines = await file.readlines()
-        for keybinding in index.keybindings:
-            if keybinding not in lines:
+    options_path = mc_dir / 'options.txt'
+    if not os.path.exists(options_path):
+        async with aiofiles.open(options_path, 'w') as file:
+            for keybinding in index.keybindings:
                 await file.write(keybinding)
-        for option in index.options:
-            if option not in lines:
+            for option in index.options:
                 await file.write(option)
+    else:
+        async with aiofiles.open(options_path, 'r+') as file:
+            lines = await file.readlines()
+            for keybinding in index.keybindings:
+                if keybinding not in lines:
+                    await file.write(keybinding)
+            for option in index.options:
+                if option not in lines:
+                    await file.write(option)
 
     to_download = set()
     for obj, obj_hash in index.objects.items():
