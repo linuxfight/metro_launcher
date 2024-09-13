@@ -40,6 +40,8 @@ class ModpackIndex:
     game_args: list[dict]
     include: list[str]
     objects: dict[str, str]
+    options: list[str]
+    keybindings: list[str]
 
 
 def get_assets_dir(config: Config):
@@ -109,13 +111,17 @@ async def sync_modpack(config: Config) -> ModpackIndex:
         if obj not in index.objects:
             (mc_dir / obj).unlink()
 
-    def handle_options_txt(file):
-        print(file)
+    async with aiofiles.open(mc_dir / 'options.txt', 'r+') as file:
+        lines = await file.readlines()
+        for keybinding in index.keybindings:
+            if keybinding not in lines:
+                await file.write(keybinding)
+        for option in index.options:
+            if option not in lines:
+                await file.write(option)
 
     to_download = set()
     for obj, obj_hash in index.objects.items():
-        if obj == 'options.txt':
-            handle_options_txt(obj)
         if obj not in existing_objects or existing_objects[obj] != obj_hash:
             to_download.add(obj)
 

@@ -7,6 +7,7 @@ from distutils.dir_util import copy_tree
 from hashlib import sha1
 from pathlib import Path
 
+import aiofiles
 import httpx
 from pydantic import BaseModel
 from tqdm import tqdm
@@ -63,7 +64,9 @@ class ModpackSpec(BaseModel):
     exec_after: str | None = None
     version_data_path: Path
     instance_dir: Path
+    keybindings: Path
     copy_extra: list[str]
+    options: list[str]
     modpack_name: str
     clean_forge_libs_path: Path | None
     forge_libs_list: list[Path] | None
@@ -79,6 +82,8 @@ class ModpackIndex(BaseModel):
     game_args: list[dict]
     include: list[str]
     objects: dict[str, str]
+    options: list[str]
+    keybindings: list[str]
 
 
 class ModpackGenerator:
@@ -114,6 +119,15 @@ class ModpackGenerator:
                     )
         return res
 
+    async def load_keybindings(self) -> list[str]:
+        keybindings = []
+        path = f'{self.spec.instance_dir}/{self.spec.keybindings}'
+        async with aiofiles.open(path, mode='r') as file:
+            async for line in file:
+                binding = str(line).replace('\n', '')
+                keybindings.append(binding)
+        return keybindings
+
     async def download_missing_libs(self):
         libs_dir = self.target_dir / 'libraries'
         existing = hash_dir(libs_dir)
@@ -126,7 +140,6 @@ class ModpackGenerator:
             if lib not in existing or (
                 existing[lib]
                 != new[lib][0]
-                # and new[lib][0] is not None
             ):
                 to_download.append(lib)
 
@@ -259,6 +272,8 @@ class ModpackGenerator:
                 *self.spec.copy_extra,
             ],
             objects=hashes,
+            options=self.spec.options,
+            keybindings=[]
         )
 
     async def generate(self) -> ModpackIndex:
@@ -271,6 +286,7 @@ class ModpackGenerator:
         self.copy_extra()
         index = self.create_index()
         exec_custom_cmd(self.spec.exec_after)
+        index.keybindings = await self.load_keybindings()
         return index
 
 

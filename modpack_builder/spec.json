@@ -3,6 +3,11 @@
     {
       "version_data_path": "C:/Users/user/AppData/Roaming/.tlauncher/legacy/Minecraft/game/versions/1.12.2-forge-14.23.5.2860/1.12.2-forge-14.23.5.2860.json",
       "instance_dir": "C:/Users/user/AppData/Roaming/.tlauncher/legacy/Minecraft/game",
+      "options": [
+        "resourcePacks:[\"Adventures-Lab-Metro\"]",
+        "lang:ru_ru"
+      ],
+      "keybindings": "config/defaultoptions/keybindings.txt",
       "copy_extra": [
         "authlib-injector.jar",
         "config",
